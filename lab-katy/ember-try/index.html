@@ -1,0 +1,21 @@
+<script src="handlebars.js"></script>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="ember-1.0.0-rc.2.js"></script>
+
+<script>
+  App = Ember.Application.create();
+  App.Router.map(function() {
+    this.resource('index', { path: '/' }, function() {});
+    this.resource('hello', { path: '/hello' }, function() {});
+  });
+</script>
+
+<script type="text/x-handlebars" data-template-name='index'>
+  <p>index!</p>
+
+  <p>{{#linkTo hi}}hello{{/linkTo}}</p>
+</script>
+
+<script type="text/x-handlebars" data-template-name='hi'>
+  hello world!!!!
+</script>
