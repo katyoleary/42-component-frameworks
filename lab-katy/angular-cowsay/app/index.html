@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="cowsayApp">
+  <head>
+    <title>angular demo.</title>
+  </head>
+  <body>
+    <header>
+      <nav ng-controller="NavController as navCtrl">
+        <ul>
+          <li ng-repeat="route in navCtrl.routes"> 
+            <!-- for every item in array of routes. easy to get data. a lot like handlebars -->
+            <a href="{{ route.url }}">{{ route.name }}</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section 
+        class="container"
+        ng-controller="CowsayController as cowsayCtrl"
+        ng-init="cowsayCtrl.current = 'squirrel'">
+        <!-- declared an angular directive above. now we have an instance of our cowsay controller. outside of this section none of cowsay stuff will work. -->
+        
+        <h2>{{ cowsayCtrl.title }}</h2>
+
+        <!-- cowsay makes us have a pre tag for cow functionality to work -->
+        <pre class="cow">
+          {{ cowsayCtrl.update(cowsayCtrl.text) }}
+        </pre>
+
+        <form
+          ng-submit="cowsayCtrl.speak(cowsayCtrl.text)"
+          name="cowsayForm" >
+
+          <select ng-model="cowsayCtrl.current">
+            <!-- going through all cowfiles and give us options available in a select box. option is going to bind to property on model to be the thing selected. view is always insync -->
+            <option 
+              ng-repeat="cowfile in cowsayCtrl.cowfiles" 
+              value="{{ cowfile }}">{{ cowfile }}</option>
+          </select>
+
+          <input 
+            type="text"
+            ng-model="cowsayCtrl.text">
+
+          <button type="submit">speak.</button>
+          <!-- in angular buttons automatically fire submit event. we have button type in there for other devs -->
+
+        </form>
+
+        <div ng-show="cowsayCtrl.spoken">
+          <pre>
+            {{ cowsayCtrl.spoken }}
+          </pre>
+          <button ng-click="cowsayCtrl.undo()">undo</button>
+        </div>
+
+      </section>
+    </main>
+
+    <footer></footer>
+
+  </body>
+</html>
+
+<!-- we have to define the root scope of this app. one overarching kind of like state of app. up in html. ng stands for angular -->
